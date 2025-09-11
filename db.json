@@ -1,0 +1,8 @@
+{
+  "products": [
+    { "id": 1, "name": "کباب", "price": 85000 },
+    { "id": 2, "name": "جوجه", "price": 65000 }
+  ],
+  "orders": [],
+  "users": []
+}
