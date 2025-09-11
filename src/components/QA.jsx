@@ -1,10 +1,10 @@
 import React from "react";
 
 
-function QA (){
+function QaA (){
 
     return(
        <></>
     );
 }
-export default QA;
+export default QaA;

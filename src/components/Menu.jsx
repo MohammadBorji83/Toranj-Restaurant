@@ -1,10 +1,12 @@
 import React from "react";
 
 
-function Menu (){
+function Navbar (){
 
     return(
-       <></>
+       <>
+       <h1 className="text-4xl">  منو</h1>
+       </>
     );
 }
-export default Menu;
+export default Navbar;

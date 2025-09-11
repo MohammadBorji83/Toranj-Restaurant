@@ -5,9 +5,7 @@ function Cart() {
 
   return (
       <>
-      <div>
-        
-      </div>
+      <h1 className="text-4xl"> سبد خرید</h1>
       </>
   )
 }
