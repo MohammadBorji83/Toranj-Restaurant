@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 
-const SignUp = ({ onRegister }) => {
+const Login = ({ users }) => {
   const [username, setUsername] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    const newUser = { username, phone, password };
-    onRegister(newUser);
-    setUsername("");
-    setPhone("");
-    setPassword("");
+    const user = users.find(
+      (u) => u.username === username && u.phone === phone && u.password === password
+    );
+    if (user) {
+      setMessage(`خوش آمدی ${user.username} 🌹`);
+    } else {
+      setMessage("اطلاعات وارد شده اشتباه است ❌");
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 max-w-sm mx-auto">
-      <h2 className="text-xl font-bold">ثبت‌نام</h2>
+    <form onSubmit={handleLogin} className="flex flex-col gap-4 p-4 max-w-sm mx-auto">
+      <h2 className="text-xl font-bold">ورود</h2>
       <input
         type="text"
         placeholder="نام کاربری"
@@ -38,11 +42,12 @@ const SignUp = ({ onRegister }) => {
         onChange={(e) => setPassword(e.target.value)}
         className="border p-2 rounded"
       />
-      <button type="submit" className="bg-green-500 text-white p-2 rounded">
-        ثبت‌نام
+      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+        ورود
       </button>
+      {message && <p>{message}</p>}
     </form>
   );
 };
 
-export default SignUp;
+export default Login;

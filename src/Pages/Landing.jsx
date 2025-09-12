@@ -11,13 +11,11 @@ import Footer from "../components/Footer";
 function Landing() {
   return (
     <>
-    <Navbar />
     <Hero />
     <Popular />
     <Foods />
     <QaA />
     <CTA />
-    <Footer />
     </>
   );
 }
