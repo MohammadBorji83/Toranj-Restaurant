@@ -1,27 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { FiMenu, FiX, FiHome, FiCoffee, FiInfo, FiMapPin, FiUserPlus, FiShoppingCart, FiLogOut } from "react-icons/fi"; // اضافه کردن آیکون خروج
+import React, { useState } from "react";
+import { FiMenu, FiX, FiHome, FiCoffee, FiInfo, FiMapPin, FiShoppingCart } from "react-icons/fi"; // حذف آیکون‌های ورود و خروج
 import { useNavigate } from "react-router-dom"; // برای لینک‌دهی
-import logo from "../assets/Logo.png"; // لوگوی شما (برای پاک کردن بک‌گراند لوگو، باید عکس را در نرم‌افزاری مثل Photoshop یا آنلاین به فرمت PNG با transparency تبدیل کنید؛ در کد نمی‌توان این کار را انجام داد)
+import logo from "../assets/Logo.png"; // لوگوی شما (برای پاک کردن بک‌گراند لوگو، باید عکس را در نرم‌افزاری مثل Photoshop یا آنلاین به فرمت PNG با transparency تبدیل کنید)
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // وضعیت لاگین کاربر
   const navigate = useNavigate(); // برای ناوبری به صفحات دیگر
 
-  // در بارگذاری اولیه، چک کردن localStorage برای وضعیت لاگین
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("isLoggedIn");
-    if (loggedIn === "true") {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  // تابعی برای خروج
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn");
-    setOpen(false); // بستن منو موبایل اگر باز باشد
-    navigate("/"); // بازگشت به صفحه اصلی پس از خروج
+  // تابع برای رفتن به صفحه آدرس
+  const handleAddressClick = () => {
+    navigate("/CTA"); // مسیر به صفحه آدرس
+    setOpen(false); // بستن منو موبایل
   };
 
   return (
@@ -37,43 +26,30 @@ function Navbar() {
 
           {/* منوی دسکتاپ - گزینه‌های منو در وسط */}
           <div className="hidden md:flex items-center justify-center flex-grow gap-8 font-bold text-lg text-amber-100">
-            <a href="#Hero" className="flex items-center gap-2 hover:text-amber-400 transition duration-300">
+            <a href="/" className="flex items-center gap-2 hover:text-amber-400 transition duration-300">
               <FiHome size={20} />
               خانه
             </a>
-            <a href="#Foods" className="flex items-center gap-2 hover:text-amber-400 transition duration-300">
+            <a href="/Foods" className="flex items-center gap-2 hover:text-amber-400 transition duration-300">
               <FiCoffee size={20} />
               منوی غذا
             </a>
-            <a href="#QaA" className="flex items-center gap-2 hover:text-amber-400 transition duration-300">
+            <a href="/QaA" className="flex items-center gap-2 hover:text-amber-400 transition duration-300">
               <FiInfo size={20} />
               درباره ما
             </a>
-            <a href="#CTA" className="flex items-center gap-2 hover:text-amber-400 transition duration-300">
+            <button onClick={handleAddressClick} className="flex items-center gap-2 hover:text-amber-400 transition duration-300 cursor-pointer">
               <FiMapPin size={20} />
               آدرس
-            </a>
+            </button>
           </div>
 
-          {/* دکمه سمت راست: اگر لاگین شده سبد خرید و خروج، иначе ورود / ثبت‌نام */}
-          <div className="hidden md:flex items-center gap-4">
-            {isLoggedIn ? (
-              <>
-                <button onClick={() => navigate("/cart")} className="flex items-center gap-2 bg-amber-600 text-white px-5 py-2.5 rounded-full hover:bg-amber-700 transition duration-300 shadow-md">
-                  <FiShoppingCart size={20} />
-                  سبد خرید
-                </button>
-                <button onClick={handleLogout} className="flex items-center gap-2 bg-red-600 text-white px-5 py-2.5 rounded-full hover:bg-red-700 transition duration-300 shadow-md">
-                  <FiLogOut size={20} />
-                  خروج
-                </button>
-              </>
-            ) : (
-              <button onClick={() => navigate("/Login")} className="flex items-center gap-2 bg-amber-600 text-white px-5 py-2.5 rounded-full hover:bg-amber-700 transition duration-300 shadow-md">
-                <FiUserPlus size={20} />
-                ورود / ثبت‌نام
-              </button>
-            )}
+          {/* دکمه سبد خرید - سمت راست */}
+          <div className="hidden md:flex items-center">
+            <button onClick={() => navigate("/cart")} className="flex items-center gap-2 bg-amber-600 text-white px-5 py-2.5 rounded-full hover:bg-amber-700 transition duration-300 shadow-md">
+              <FiShoppingCart size={20} />
+              سبد خرید
+            </button>
           </div>
 
           {/* دکمه موبایل - سمت راست */}
@@ -98,39 +74,26 @@ function Navbar() {
           </button>
         </div>
         <div className="flex flex-col gap-8 p-8 text-xl font-bold items-start">
-          {isLoggedIn ? (
-            <>
-              <button onClick={() => { navigate("/cart"); setOpen(false); }} className="flex items-center gap-3 bg-amber-600 text-white px-6 py-3 rounded-full hover:bg-amber-700 transition duration-300 w-full justify-start shadow-md">
-                <FiShoppingCart size={24} />
-                سبد خرید
-              </button>
-              <button onClick={handleLogout} className="flex items-center gap-3 bg-red-600 text-white px-6 py-3 rounded-full hover:bg-red-700 transition duration-300 w-full justify-start shadow-md">
-                <FiLogOut size={24} />
-                خروج
-              </button>
-            </>
-          ) : (
-            <button onClick={() => { navigate("/Login"); setOpen(false); }} className="flex items-center gap-3 bg-amber-600 text-white px-6 py-3 rounded-full hover:bg-amber-700 transition duration-300 w-full justify-start shadow-md">
-              <FiUserPlus size={24} />
-              ورود / ثبت‌نام
-            </button>
-          )}
-          <a href="#home" onClick={() => setOpen(false)} className="flex items-center gap-3 hover:text-amber-400 transition duration-300 w-full justify-start">
+          <button onClick={() => { navigate("/cart"); setOpen(false); }} className="flex items-center gap-3 bg-amber-600 text-white px-6 py-3 rounded-full hover:bg-amber-700 transition duration-300 w-full justify-start shadow-md">
+            <FiShoppingCart size={24} />
+            سبد خرید
+          </button>
+          <a href="/" onClick={() => setOpen(false)} className="flex items-center gap-3 hover:text-amber-400 transition duration-300 w-full justify-start">
             <FiHome size={24} />
             خانه
           </a>
-          <a href="#menu" onClick={() => setOpen(false)} className="flex items-center gap-3 hover:text-amber-400 transition duration-300 w-full justify-start">
+          <a href="/Foods" onClick={() => setOpen(false)} className="flex items-center gap-3 hover:text-amber-400 transition duration-300 w-full justify-start">
             <FiCoffee size={24} />
             منوی غذا
           </a>
-          <a href="#about" onClick={() => setOpen(false)} className="flex items-center gap-3 hover:text-amber-400 transition duration-300 w-full justify-start">
+          <a href="/QaA" onClick={() => setOpen(false)} className="flex items-center gap-3 hover:text-amber-400 transition duration-300 w-full justify-start">
             <FiInfo size={24} />
             درباره ما
           </a>
-          <a href="#contact" onClick={() => setOpen(false)} className="flex items-center gap-3 hover:text-amber-400 transition duration-300 w-full justify-start">
+          <button onClick={handleAddressClick} className="flex items-center gap-3 hover:text-amber-400 transition duration-300 w-full justify-start">
             <FiMapPin size={24} />
             آدرس
-          </a>
+          </button>
         </div>
       </div>
     </>
