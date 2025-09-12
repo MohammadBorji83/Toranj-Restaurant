@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { FiMenu, FiX, FiHome, FiCoffee, FiInfo, FiMapPin, FiShoppingCart } from "react-icons/fi"; // حذف آیکون‌های ورود و خروج
+import { FiMenu, FiX, FiHome, FiCoffee, FiInfo, FiMapPin, FiShoppingCart } from "react-icons/fi"; 
 import { useNavigate } from "react-router-dom"; // برای لینک‌دهی
-import logo from "../assets/Logo.png"; // لوگوی شما (برای پاک کردن بک‌گراند لوگو، باید عکس را در نرم‌افزاری مثل Photoshop یا آنلاین به فرمت PNG با transparency تبدیل کنید)
+import logo from "../assets/Logo.png"; 
 
 function Navbar() {
   const [open, setOpen] = useState(false);
