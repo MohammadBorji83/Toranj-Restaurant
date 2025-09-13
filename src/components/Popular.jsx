@@ -5,6 +5,8 @@ import { FiShoppingCart, FiPlus, FiMinus } from "react-icons/fi";
 import kabab from "../assets/Menu/Kabab-Soltani.jpg";
 import joje from "../assets/Menu/joje.jpg";
 import dizi from "../assets/Menu/dizi.jpg";
+import { useCart } from "../context/CartContext";
+
 
 function Popular() {
   const dishes = [
@@ -14,6 +16,7 @@ function Popular() {
       description: "طعم اصیل ایرانی با بهترین گوشت تازه.",
       price: "۲۵۰,۰۰۰ تومان",
       image: kabab,
+      hazine:250000,
     },
     {
       id: 2,
@@ -21,6 +24,7 @@ function Popular() {
       description: "مرغ تازه زعفرانی با طعمی به‌یادماندنی.",
       price: "۳۲۰,۰۰۰ تومان",
       image: joje,
+      hazine:320000,
     },
     {
       id: 3,
@@ -28,6 +32,7 @@ function Popular() {
       description: "غذای سنتی با گوشت تازه و نخود عالی.",
       price: "۱۵۰,۰۰۰ تومان",
       image: dizi,
+      hazine:150000,
     },
   ];
 
@@ -41,9 +46,7 @@ function Popular() {
     );
   };
 
-  const addToCart = (dish, quantity) => {
-    console.log(`اضافه شد به سبد خرید: ${dish.name}، تعداد: ${quantity}`);
-  };
+  const { addToCart } = useCart();
 
   return (
     <section className="py-14 bg-amber-50">
@@ -120,7 +123,7 @@ function Popular() {
                   </div>
 
                   <motion.button
-                    onClick={() => addToCart(dish, quantities[index])}
+                     onClick={() => addToCart(dish, quantities[index])}
                     className="flex items-center gap-2 px-4 py-2 rounded-full text-white bg-gradient-to-r from-amber-600 to-amber-700"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

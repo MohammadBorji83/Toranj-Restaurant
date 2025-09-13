@@ -7,20 +7,23 @@ import Order from "./Pages/Order";
 import Error404 from "./Pages/404";
 import Navbar from './components/Menu';
 import Footer from './components/Footer';
-
+import { CartProvider } from "./context/CartContext";
 
 function App() {
   return (
     <>
-   
-    <Navbar />
+   <CartProvider>
+     <Navbar />
       <Routes>
-        <Route path="/" element={<Landing />} />
+         <Route path="/" element={<Landing />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
         <Route path="*" element={< Error404 />} />
       </Routes>
       <Footer />
+
+   </CartProvider>
+   
    </>
   );
 }
