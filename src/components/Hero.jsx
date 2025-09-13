@@ -1,33 +1,49 @@
-import React, { useRef } from "react";
-import Draggable from "react-draggable";
+import React, { useRef, useState, useEffect } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-
 import kababLoghmeh from "../assets/Hero-Img/kabab-loghmeh.webp";
 import coca from "../assets/Hero-Img/coca-cola-botle-red.webp";
 import dizi from "../assets/Hero-Img/dizi.webp";
 import tomato from "../assets/Hero-Img/tomato.webp";
 import dogh from "../assets/Hero-Img/dogh.webp";
+import salad from "../assets/Hero-Img/salad.webp";
+
 
 function Hero() {
-  const images = [kababLoghmeh, coca, dizi, tomato, dogh];
-  const nodeRefs = useRef(images.map(() => React.createRef()));
+  const images = [kababLoghmeh, coca, dizi, tomato, dogh,salad];
+  const containerRef = useRef(null);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+
+  // گرفتن ابعاد کانتینر برای چیدمان دایره‌ای پویا
+  useEffect(() => {
+    const updateSize = () => {
+      if (containerRef.current) {
+        setContainerSize({
+          width: containerRef.current.offsetWidth,
+          height: containerRef.current.offsetHeight,
+        });
+      }
+    };
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
 
   // مختصات شروع دایره‌ای
-  const radiusDesktop = 200;
-  const radiusMobile = 120;
-  const centerDesktop = { x: 250, y: 250 };
-  const centerMobile = { x: 160, y: 160 };
+  const radiusDesktop = 180;
+  const radiusMobile = 100;
+  const isMobile = window.innerWidth < 768;
+  const radius = isMobile ? radiusMobile : radiusDesktop;
+  const center = {
+    x: containerSize.width / 2,
+    y: containerSize.height / 2,
+  };
 
   const startPositions = images.map((_, i) => {
     const angle = (2 * Math.PI * i) / images.length;
-    // بر اساس عرض صفحه مقدار رو انتخاب کن
-    const isMobile = window.innerWidth < 768;
-    const r = isMobile ? radiusMobile : radiusDesktop;
-    const c = isMobile ? centerMobile : centerDesktop;
     return {
-      top: c.y + r * Math.sin(angle),
-      left: c.x + r * Math.cos(angle),
+      top: center.y + radius * Math.sin(angle) - 40,
+      left: center.x + radius * Math.cos(angle) - 40,
     };
   });
 
@@ -39,57 +55,55 @@ function Hero() {
           className="flex flex-col justify-center items-start text-white"
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
         >
           <h1 className="text-3xl md:text-5xl font-bold mb-4">
-            خوش آمدید به رستوران ما
+            رستوران ترنج
           </h1>
           <p className="text-lg md:text-xl mb-6 leading-relaxed">
-            تجربه‌ای بی‌نظیر از طعم‌های لذیذ و محیطی گرم و صمیمی. منوی متنوع
-            ما را کاوش کنید!
+            تجربه‌ای بی‌نظیر از طعم‌های لذیذ و محیطی گرم و صمیمی. منوی متنوع مناسب با فرهنگ ایرانی!
           </p>
           <motion.button
             className="bg-amber-700 text-white px-6 py-3 rounded-full transition duration-200"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.05, boxShadow: "0 4px 15px rgba(0,0,0,0.2)" }}
+            whileTap={{ scale: 0.95 }}
           >
             مشاهده منوی غذا
           </motion.button>
         </motion.div>
 
-        {/* تصاویر دایره‌ای */}
-        <div className="relative w-full h-[520px] md:h-[640px] overflow-hidden select-none">
+        {/* تصاویر دایره‌ای ثابت */}
+        <div
+          ref={containerRef}
+          className="relative w-full min-h-[400px] md:min-h-[500px] select-none"
+        >
           {images.map((src, index) => (
-            <Draggable
+            <motion.div
               key={index}
-              nodeRef={nodeRefs.current[index]}
-              bounds="parent"
+              style={{
+                position: "absolute",
+                top: startPositions[index].top,
+                left: startPositions[index].left,
+              }}
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
-              <div
-                ref={nodeRefs.current[index]}
-                style={{
-                  position: "absolute",
-                  top: startPositions[index].top,
-                  left: startPositions[index].left,
-                  touchAction: "none",
+              <motion.img
+                src={src}
+                alt={`food-${index}`}
+                initial={{ opacity: 0, scale: 0.7, rotate: -10 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.15 * index,
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
                 }}
-                className="cursor-grab active:cursor-grabbing"
-              >
-                <motion.img
-                  src={src}
-                  alt={`food-${index}`}
-                  initial={{ opacity: 0, scale: 0.7 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: 0.2 * index,
-                    type: "spring",
-                  }}
-                  className="w-[90px] md:w-[200px] h-auto object-contain"
-                  draggable={false}
-                />
-              </div>
-            </Draggable>
+                className="w-[60px] md:w-[120px] h-auto object-contain rounded-lg shadow-md"
+                onError={() => console.error(`Failed to load image: ${src}`)}
+              />
+            </motion.div>
           ))}
         </div>
       </div>
@@ -98,4 +112,3 @@ function Hero() {
 }
 
 export default Hero;
-
