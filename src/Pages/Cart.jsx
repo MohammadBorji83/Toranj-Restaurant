@@ -6,13 +6,11 @@ import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 
 function Cart() {
-  const { cart, removeFromCart, updateQuantity } = useCart();
+  const { cart, removeFromCart, updateQuantity, getTotalPrice } = useCart();
 
   // محاسبه جمع کل قیمت
   const calculateTotal = () => {
-    return cart
-      .reduce((acc, item) => acc + item.hazine * item.quantity, 0)
-      .toLocaleString("fa-IR");
+    return getTotalPrice().toLocaleString("fa-IR");
   };
 
   return (
@@ -74,8 +72,8 @@ function Cart() {
                     </h3>
                     <p className="text-gray-600 mb-3">{item.description}</p>
                     <p className="text-lg font-semibold text-amber-700 mb-4">
-                      {item.hazine.toLocaleString("fa-IR")} × {item.quantity} ={" "}
-                      {(item.hazine * item.quantity).toLocaleString("fa-IR")}{" "}
+                      {item.price} × {item.quantity} ={" "}
+                      {((item.hazine || parseInt(item.price.replace(/[^\d]/g, ""), 10)) * item.quantity).toLocaleString("fa-IR")}{" "}
                       تومان
                     </p>
 

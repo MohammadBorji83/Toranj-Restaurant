@@ -15,17 +15,19 @@ export function CartProvider({ children }) {
   }, [cart]);
 
   // اضافه کردن به سبد خرید
-  const addToCart = (item) => {
+  const addToCart = (item, quantity = 1) => {
     setCart((prev) => {
       const existingItem = prev.find((p) => p.id === item.id);
       if (existingItem) {
-        // اگر قبلاً بود، تعداد +1 میشه
+        // اگر قبلاً بود → جمع کن
         return prev.map((p) =>
-          p.id === item.id ? { ...p, quantity: p.quantity + 1 } : p
+          p.id === item.id
+            ? { ...p, quantity: p.quantity + quantity }
+            : p
         );
       } else {
-        // اگر نبود، به لیست اضافه میشه
-        return [...prev, { ...item, quantity: 1 }];
+        // اگر نبود → با مقدار quantity اضافه کن
+        return [...prev, { ...item, quantity }];
       }
     });
   };
@@ -46,9 +48,17 @@ export function CartProvider({ children }) {
     );
   };
 
+  // جمع کل
+  const getTotalPrice = () => {
+    return cart.reduce((sum, item) => {
+      const priceNum = item.hazine || parseInt(item.price.replace(/[^\d]/g, ""), 10);
+      return sum + priceNum * item.quantity;
+    }, 0);
+  };
+
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, updateQuantity }}
+      value={{ cart, addToCart, removeFromCart, updateQuantity, getTotalPrice }}
     >
       {children}
     </CartContext.Provider>

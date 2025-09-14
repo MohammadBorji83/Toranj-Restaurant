@@ -30,7 +30,7 @@ function Navbar() {
               <FiHome size={20} />
               خانه
             </a>
-            <a href="/Foods" className="flex items-center gap-2 hover:text-amber-400 transition duration-300">
+            <a href="/#Foods" className="flex items-center gap-2 hover:text-amber-400 transition duration-300">
               <FiCoffee size={20} />
               منوی غذا
             </a>
@@ -82,7 +82,7 @@ function Navbar() {
             <FiHome size={24} />
             خانه
           </a>
-          <a href="/Foods" onClick={() => setOpen(false)} className="flex items-center gap-3 hover:text-amber-400 transition duration-300 w-full justify-start">
+          <a href="/#Foods" onClick={() => setOpen(false)} className="flex items-center gap-3 hover:text-amber-400 transition duration-300 w-full justify-start">
             <FiCoffee size={24} />
             منوی غذا
           </a>
