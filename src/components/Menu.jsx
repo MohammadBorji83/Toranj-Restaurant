@@ -9,7 +9,7 @@ function Navbar() {
 
   // تابع برای رفتن به صفحه آدرس
   const handleAddressClick = () => {
-    navigate("/CTA"); // مسیر به صفحه آدرس
+    navigate("/#CTA"); // مسیر به صفحه آدرس
     setOpen(false); // بستن منو موبایل
   };
 
@@ -34,7 +34,7 @@ function Navbar() {
               <FiCoffee size={20} />
               منوی غذا
             </a>
-            <a href="/QaA" className="flex items-center gap-2 hover:text-amber-400 transition duration-300">
+            <a href="/#QaA" className="flex items-center gap-2 hover:text-amber-400 transition duration-300">
               <FiInfo size={20} />
               درباره ما
             </a>
@@ -86,7 +86,7 @@ function Navbar() {
             <FiCoffee size={24} />
             منوی غذا
           </a>
-          <a href="/QaA" onClick={() => setOpen(false)} className="flex items-center gap-3 hover:text-amber-400 transition duration-300 w-full justify-start">
+          <a href="/#QaA" onClick={() => setOpen(false)} className="flex items-center gap-3 hover:text-amber-400 transition duration-300 w-full justify-start">
             <FiInfo size={24} />
             درباره ما
           </a>
