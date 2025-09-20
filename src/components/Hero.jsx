@@ -49,7 +49,7 @@ function Hero() {
 
   return (
     <section className="min-h-[600px] bg-gradient-to-br from-amber-400 to-amber-600 py-8 md:py-12">
-      <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-[40%_60%] gap-6 md:gap-8">
+      <div className="w-full mx-2 md:container md:mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-[40%_60%] gap-6 md:gap-8">
         {/* متن */}
         <motion.div
           className="flex flex-col justify-center items-start text-white"
